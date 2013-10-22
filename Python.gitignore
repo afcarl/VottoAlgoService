@@ -28,6 +28,7 @@ pip-delete-this-directory.txt
 .coverage
 .tox
 nosetests.xml
+coverage.xml
 
 # Translations
 *.mo
