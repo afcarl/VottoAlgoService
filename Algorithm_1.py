@@ -7,6 +7,7 @@
 #Main principle: 
 #You risk big, you win/lose big.
 #For example, if you are a TG, not only do you save significantly more/less money when you win/lose but also your odds at the next transaction improves/drops more dramatically. On the other hand, if you're so ethical that you insist on option MP, you always save some money but not an impressive/dissapointing amount. And you odds remain the same. The odds are adjusted by varying the desired profit increase \alpha in a certain range. 
+#DS is testing
 
 import numpy as np
 import random
