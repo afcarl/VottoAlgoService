@@ -14,7 +14,8 @@
 # DS is testing
 
 import random
-from discount import GamblerType, calculate_discount, coffee_price
+
+from discount.discount import GamblerType, calculate_discount, coffee_price
 
 
 def command_line_client(alpha=1.1, rate_of_customer_increase=1.2, range_alpha=[1.0, 1.2], no_inc=10):
