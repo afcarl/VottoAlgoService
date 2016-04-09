@@ -85,8 +85,8 @@ def command_line_client(alpha=1.1, rate_of_customer_increase=1.2, range_alpha=[1
             no_win += 1
             history += ['W', [q_w, d_w, d_l]]  # update history
 
-            if (alpha - width_inc * gambler_type.probability) > range_alpha[0]:
-                alpha -= width_inc * gambler_type.probability  # update alpha!
+            if (alpha - width_inc * (1 - gambler_type.probability)) > range_alpha[0]:
+                alpha -= width_inc * (1 - gambler_type.probability)  # update alpha!
             else:
                 alpha = range_alpha[0]
         else:
@@ -96,8 +96,8 @@ def command_line_client(alpha=1.1, rate_of_customer_increase=1.2, range_alpha=[1
             no_lose += 1
             history += ['L', [q_w, d_w, d_l]]  # update history
 
-            if (alpha + width_inc * gambler_type.probability) < range_alpha[1]:
-                alpha += width_inc * gambler_type.probability  # update alpha!
+            if (alpha + width_inc * (1 - gambler_type.probability)) < range_alpha[1]:
+                alpha += width_inc * (1 - gambler_type.probability)  # update alpha!
             else:
                 alpha = range_alpha[1]
         print "You've saved %s $ so far!" % round(save, 2)
