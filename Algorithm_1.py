@@ -46,7 +46,8 @@ def command_line_client(alpha=1.1, rate_of_customer_increase=1.2, range_alpha=[1
         print '---------------------'
         print "Choose from below:"
         print " "
-        print "current alpha  = %s" % alpha
+        print "Current alpha = %s" % alpha
+
 
         # Print the output for immoral gamblers
         for gambler_type in GamblerType:
@@ -121,4 +122,4 @@ def command_line_client(alpha=1.1, rate_of_customer_increase=1.2, range_alpha=[1
 
 
 # Run an interactive session:    
-command_line_client(alpha=1.1, rate_of_customer_increase=1.35, range_alpha=[1.0, 1.35], no_inc=10)
+command_line_client()
