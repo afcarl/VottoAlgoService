@@ -42,3 +42,7 @@ def _calculate_discount_given_probability(alpha, q_w, rate_of_customer_increase)
     d_l = (1 - q_w) * (end - start) + start
     d_w = grad_l * d_l + intercept_l
     return [q_w, d_w, d_l]
+
+
+def calculate_reputation(alpha, range_alpha):
+    return round(100*(1 - (alpha - range_alpha[0])/(range_alpha[1] - range_alpha[0])))

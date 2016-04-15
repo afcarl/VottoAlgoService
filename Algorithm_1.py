@@ -18,7 +18,7 @@ import random
 from discount.discount import GamblerType, calculate_discount, coffee_price
 
 
-def command_line_client(alpha=1.1, rate_of_customer_increase=1.2, range_alpha=[1.0, 1.2], no_inc=10):
+def command_line_client(alpha=1.175, rate_of_customer_increase=1.35, range_alpha=[1.0, 1.35], no_inc=4):
     """
     This is the main algorithm which starts an interactive simulation.
     :param alpha:the desired rate of profit increase (>1)
@@ -86,8 +86,8 @@ def command_line_client(alpha=1.1, rate_of_customer_increase=1.2, range_alpha=[1
             no_win += 1
             history += ['W', [q_w, d_w, d_l]]  # update history
 
-            if (alpha - width_inc * (1 - gambler_type.probability)) > range_alpha[0]:
-                alpha -= width_inc * (1 - gambler_type.probability)  # update alpha!
+            if (alpha - width_inc * (1.25 - gambler_type.probability)) > range_alpha[0]:
+                alpha -= width_inc * (1.25 - gambler_type.probability)  # update alpha!
             else:
                 alpha = range_alpha[0]
         else:
@@ -97,8 +97,8 @@ def command_line_client(alpha=1.1, rate_of_customer_increase=1.2, range_alpha=[1
             no_lose += 1
             history += ['L', [q_w, d_w, d_l]]  # update history
 
-            if (alpha + width_inc * (1 - gambler_type.probability)) < range_alpha[1]:
-                alpha += width_inc * (1 - gambler_type.probability)  # update alpha!
+            if (alpha + width_inc * (1.25 - gambler_type.probability)) < range_alpha[1]:
+                alpha += width_inc * (1.25 - gambler_type.probability)  # update alpha!
             else:
                 alpha = range_alpha[1]
         print "You've saved %s $ so far!" % round(save, 2)
