@@ -15,15 +15,58 @@
 
 import random
 
-from discount.discount import GamblerType, calculate_discount, calculate_reputation, coffee_price
+from discount.discount import GamblerType, calculate_discount, calculate_reputation, coffee_price, coffee_cost
+
+def compute_range_of_alpha(d_max = 0.8):
+    """
+    :param  d_max: the max discount e.g. 0.7 means 30% off
+    :return the corresponding range of alpha
+    """
+    alpha_max = (coffee_price - coffee_cost)/(coffee_price*d_max - coffee_cost)
+    return [1, alpha_max]
+
+def display_max_discount_options(d_max = 0.8):
+    """
+    :param d_max        : the max discount e.g. 0.8 means 20% off
+    :return             : the max discount options
+    """
+    print ""
+    print "                    The below are the maximal discount options"
+    print ""
+    print "The price for a coffee is %s $." % coffee_price
+
+    # Fundamentals:
+    range_alpha = compute_range_of_alpha(d_max)
+    alpha = range_alpha[0]
+    rate_of_customer_increase = range_alpha[1]
+
+    # Display 4 gambling options:
+    print "Choose from below:"
+    print " "
+
+    # Print the output for immoral gamblers
+    for gambler_type in GamblerType:
+        if gambler_type != GamblerType.moral:
+            [q_w, d_w, d_l] = calculate_discount(alpha, rate_of_customer_increase, gambler_type)
+            print "          %s : %s, Winning Probability = %s %%" % (
+                gambler_type.input_option, gambler_type.description, int(100 * q_w))
+            # print "  Win and get %s    OR    Lose and get %s" %(d_w,d_l)
+            print "          Win and save %s $    OR    Lose and save %s $" % (
+                round(coffee_price * (1 - d_w), 2), round(coffee_price * (1 - d_l), 2))
+            print " "
+
+    # Print the output for our scrupulous friends out there (moral person)
+    [q_w, d_w, d_l] = calculate_discount(alpha, rate_of_customer_increase, GamblerType.moral)
+    print "          %s : %s, Guaranteed save %s $" % (GamblerType.moral.input_option,
+                                                       GamblerType.moral.description,
+                                                       round(coffee_price * (1 - d_w), 2))
 
 
-def command_line_client(alpha=1.175, rate_of_customer_increase=1.35, range_alpha=[1.0, 1.35], no_inc=4):
+
+def command_line_client(d_max = 0.8, no_inc = 4):
     """
     This is the main algorithm which starts an interactive simulation.
-    :param alpha:the desired rate of profit increase (>1)
-    :param rate_of_customer_increase    :the expected rate of increase in no. of customers.
-    :param range_alpha : [lower bound, upper bound], range of alpha e.g. Here the upper bdd is strictly smaller than R
+    :param d_max        : the max discount e.g. 0.8 means 20% off
     to make sure that you always save money even when you lose!
     :param no_inc      : no of default increments for each update of R
     """
@@ -33,6 +76,10 @@ def command_line_client(alpha=1.175, rate_of_customer_increase=1.35, range_alpha
     print "The price for a coffee is %s $." % coffee_price
 
     # Fundamentals:
+    range_alpha = compute_range_of_alpha(d_max)
+    alpha = (range_alpha[1] + range_alpha[0])/2
+    print alpha
+    rate_of_customer_increase = range_alpha[1]
     width_inc = (range_alpha[1] - range_alpha[0]) / no_inc  # default width of an increment
     alpha_mid =  range_alpha[0] + (range_alpha[1] - range_alpha[0]) / 2        # middle alpha value
     history = []  # history of past transactions
@@ -46,9 +93,9 @@ def command_line_client(alpha=1.175, rate_of_customer_increase=1.35, range_alpha
     while should_continue == 1:
 
         # Display the reputation (1 - 100) : the closer to 100, the better discounts you get.
-        reputation = int(calculate_reputation(alpha, range_alpha))
+        potential = int(calculate_reputation(alpha, range_alpha))
         print ""
-        print "Your Gambler Reputation is %s (on the scale 1 - 100)" % reputation
+        print "Your Gambler potential is %s (on the scale 1 - 100)" % potential
         print ""
         # Display 4 gambling options:
         print '---------------------'
@@ -144,5 +191,6 @@ def command_line_client(alpha=1.175, rate_of_customer_increase=1.35, range_alpha
     return history
 
 
+
 # Run an interactive session:
-command_line_client()
+# command_line_client()
